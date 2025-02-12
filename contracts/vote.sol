@@ -50,15 +50,10 @@ contract Vote {
         Voter storage sender = voters[msg.sender];
         require(!sender.voted, "User has voted already.");
 
-     //   sender.voted = true;
-        //sender.vote = proposal;
-
-       // proposals[proposal].count += 1;
-
         encryptedVotes.push(encryptedVote);
 
         bool success = token.transferFrom(msg.sender, address(this), 1);
-        require(success, "Transfer failed");
+        require(success, "Transfer failed.");
     }
 
     function winningProposal() public view returns (bytes32) {
@@ -82,16 +77,13 @@ contract Vote {
     }
 
     function register() external payable {
-        console.log("Registering:", msg.sender);
         require(!registered[msg.sender], "User already registered");
+
         registered[msg.sender] = true;
-        console.log("Registration complete:", msg.sender);
         emit Registered(msg.sender);
 
         token.mintForUser(msg.sender);
-        console.log("Token Minted");
         emit TokenSent(msg.sender);
-        console.log("Event Emitted");
     }
 
     function hasRegistered(address _address) public view returns(bool) {
