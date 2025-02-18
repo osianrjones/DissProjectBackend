@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.20;
-
+pragma experimental SMTChecker;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "hardhat/console.sol";
+
 
 interface IVoteToken {
     function mintForUser(address user) external;
@@ -51,12 +51,14 @@ contract Vote {
         require(!sender.voted, "User has voted already.");
 
         encryptedVotes.push(encryptedVote);
+        sender.voted = true;
 
         bool success = token.transferFrom(msg.sender, address(this), 1);
         require(success, "Transfer failed.");
     }
 
     function winningProposal() public view returns (bytes32) {
+        require(proposals.length > 0, "There are no proposals in the contract.");
         uint winningCount = 0;
         uint winningIndex = 0;
         for (uint i = 0; i < proposals.length; i++) {
