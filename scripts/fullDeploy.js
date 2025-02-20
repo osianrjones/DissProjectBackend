@@ -2,6 +2,8 @@ const hardhat = require("hardhat");
 const Web3 = require("web3");
 
 async function main() {
+    //Run tests before deployment
+    await hardhat.run("test");
     //Deploy Vote
     const proposals = ["Ronald", "Barack", "Bill", "George"];
 
