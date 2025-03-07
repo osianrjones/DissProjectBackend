@@ -46,16 +46,22 @@ contract Vote {
         token = IVoteToken(tokenAddress);
     } 
 
-    function vote(string memory encryptedVote) external {
-        Voter storage sender = voters[msg.sender];
-        require(!sender.voted, "User has voted already.");
+   function vote(string memory encryptedVote) external {
+    Voter storage sender = voters[msg.sender];
+    require(!sender.voted, "User has voted already.");
 
-        encryptedVotes.push(encryptedVote);
-        sender.voted = true;
+    uint256 previousLength = encryptedVotes.length;
+    encryptedVotes.push(encryptedVote);
+    assert(encryptedVotes.length == previousLength + 1);
 
-        bool success = token.transferFrom(msg.sender, address(this), 1);
-        require(success, "Transfer failed.");
-    }
+    sender.voted = true;
+    assert(sender.voted == true);
+
+    bool success = token.transferFrom(msg.sender, address(this), 1);
+    assert(success);
+    require(success, "Transfer failed.");
+}
+
 
     function winningProposal() public view returns (bytes32) {
         require(proposals.length > 0, "There are no proposals in the contract.");
