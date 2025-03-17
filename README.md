@@ -1,13 +1,12 @@
-# Sample Hardhat Project
+# Creating a system for smart and secure voting using Ethereum smart contracts. 
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
+This project encapsulates the backend of my solution to the project. Specifically, the creation of a local Hardhat Ethereum instance and the smart contracts deployed to the network.
 
 Try running some of the following tasks:
 
 ```shell
-npx hardhat help
+npx hardhat compile
 npx hardhat test
-REPORT_GAS=true npx hardhat test
 npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/Lock.js
+npx hardhat ignition deploy ./ignition/modules/fullDeploy.js
 ```
