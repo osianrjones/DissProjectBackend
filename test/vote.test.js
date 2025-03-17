@@ -59,6 +59,19 @@ describe("Vote Contract", function () {
       await expect(vote.connect(addr1).vote("Encrypted Vote 2"))
         .to.be.revertedWith("User has voted already.");
     });
+
+    it("Should handle multiple transactions", async function () {
+      const TRANSACTION_NUM = 1000;
+      const expectedResult = "Ronald";
+
+      for (let i = 0; i < TRANSACTION_NUM; i++) {
+        const bytes32Result = await vote.winningProposal();
+        const asciiResult = Web3.utils.hexToAscii(bytes32Result).replace(/\u0000/g, "");
+        expect(asciiResult).to.equal(expectedResult);
+      }
+
+    });
+    
   });
 
   describe("Proposals", function () {
