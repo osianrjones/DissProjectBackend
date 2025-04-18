@@ -8,6 +8,8 @@ interface IVoteToken {
     function mintForUser(address user) external;
 
     function transferFrom(address from, address to, uint256 amount) external returns (bool);
+
+    function burnFrom(address account, uint256 amount) external;
 }
 
 contract Vote {
@@ -57,9 +59,7 @@ contract Vote {
     sender.voted = true;
     assert(sender.voted == true);
 
-    bool success = token.transferFrom(msg.sender, address(this), 1);
-    assert(success);
-    require(success, "Transfer failed.");
+    token.burnFrom(msg.sender, 1);
 }
 
 
