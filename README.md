@@ -5,8 +5,9 @@ This project encapsulates the backend of my solution to the project. Specificall
 Try running some of the following tasks:
 
 ```shell
+npm install
 npx hardhat compile
 npx hardhat test
 npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/fullDeploy.js
+npx hardhat run scripts/fullDeploy.js --network localhost
 ```
